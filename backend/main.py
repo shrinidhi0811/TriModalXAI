@@ -58,12 +58,17 @@ async def predict(file: UploadFile) -> Dict[str, Any]:
         raise HTTPException(status_code=400, detail="File must be an image")
     
     try:
-        # Read and preprocess image
+        # Read and preprocess image (returns [rgb, vein, texture] and original)
         contents = await file.read()
-        preprocessed_img, original_img = preprocess_image(contents)
+        preprocessed_imgs, original_img = preprocess_image(contents)
         
-        # Get model prediction
-        prediction = model.predict(preprocessed_img[np.newaxis], verbose=0)
+        # Get model prediction - model expects list of 3 inputs
+        # Expand dimensions for batch
+        rgb_batch = np.expand_dims(preprocessed_imgs[0], axis=0)
+        vein_batch = np.expand_dims(preprocessed_imgs[1], axis=0)
+        texture_batch = np.expand_dims(preprocessed_imgs[2], axis=0)
+        
+        prediction = model.predict([rgb_batch, vein_batch, texture_batch], verbose=0)
         predicted_idx = np.argmax(prediction[0])
         confidence = float(prediction[0][predicted_idx])
         predicted_class = LEAF_CLASSES[predicted_idx]
@@ -72,7 +77,7 @@ async def predict(file: UploadFile) -> Dict[str, Any]:
         knowledge = knowledge_base.get_leaf_info(predicted_class)
         
         # Generate Grad-CAM
-        heatmap = generate_gradcam(model, preprocessed_img)
+        heatmap = generate_gradcam(model, preprocessed_imgs)
         heatmap_base64 = create_gradcam_overlay(original_img, heatmap)
         
         # Return response
@@ -84,6 +89,8 @@ async def predict(file: UploadFile) -> Dict[str, Any]:
         }
         
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
