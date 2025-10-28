@@ -1,0 +1,174 @@
+{
+  "alpinia_galanga": {
+    "Scientific Name": "Alpinia galanga",
+    "Sources": [
+      "GlobinMed medicinal herbs entry on Alpinia galanga",  
+      "Vikaspedia medicinal & aromatic plants: Alpinia galanga",  
+      "Dabur / Ayurvedic medicinal plants page for Kulanjan",  
+      "Kristu Jayanti College plant database entry"
+    ],
+    "Medicinal Uses": [
+      "Digestive support (carminative, stomachic, improves appetite)",  
+      "Anti‑inflammatory, analgesic",  
+      "Respiratory ailments: cough, bronchitis, throat infections",  
+      "Antimicrobial (antibacterial, antifungal)",  
+      "Antioxidant, immunomodulatory",  
+      "Used traditionally for flatulence, nausea, indigestion"
+    ],
+    "Active Compounds": [
+      "1′‑acetoxychavicol acetate (ACA)",  
+      "1′‑acetoxyeugenol acetate",  
+      "Galangin (a flavonol)",  
+      "Methyl cinnamate",  
+      "1,8‑cineole",  
+      "α‑pinene, β‑pinene, β‑farnesene, p‑hydroxycinnamaldehyde",  
+      "Kaempferide, alpinine, other flavonoids, phenolics, essential oils"
+    ],
+    "Precautions": "Likely safe in amounts used in food. For medicinal doses, avoid in pregnancy & lactation (insufficient safety data). May irritate GI tract in sensitive persons."  
+  },
+  
+  "azadirachta_indica": {
+    "Scientific Name": "Azadirachta indica",
+    "Sources": [
+      "NCBI / PMC article on medicinal plants of Tamil Nadu (includes Neem)",  
+      "Ayurvedic / medicinal plant compendia",  
+      "Peer‑reviewed studies on neem phytochemistry"
+    ],
+    "Medicinal Uses": [
+      "Antibacterial, antifungal, antiviral",  
+      "Used in skin diseases, wound healing",  
+      "Dental health (e.g. in toothpastes, gum health)",  
+      "Antimalarial, anti‑parasitic in traditional systems",  
+      "Anti-inflammatory, antipyretic, immunomodulatory"
+    ],
+    "Active Compounds": [
+      "Azadirachtin (a limonoid)",  
+      "Nimbin, nimbidin, nimbolide",  
+      "Gedunin, margosine, salannin",  
+      "Quercetin, beta‑sitosterol, tannins, flavonoids"
+    ],
+    "Precautions": "High doses may impair fertility or cause miscarriage; may lower blood sugar — caution in diabetics; possible liver toxicity in overdose; avoid use in pregnancy & lactation without supervision."  
+  },
+  
+  "basella_alba": {
+    "Scientific Name": "Basella alba",
+    "Sources": [
+      "CABI plant compendium / CABI digital library",  
+      "IMSEAR review via WHO region on Basella alba",  
+      "Tropical Journal / phytochemical profiling papers"
+    ],
+    "Medicinal Uses": [
+      "Antiulcer, gastroprotective",  
+      "Anti-inflammatory, antioxidant",  
+      "Wound healing, antimicrobial",  
+      "Used in skin diseases, sores, burns",  
+      "Used for diarrhoea, dysentery, constipation in folk medicine"
+    ],
+    "Active Compounds": [
+      "Flavonoids, phenolics, tannins, saponins",  
+      "Glycosides",  
+      "Betacyanins (in fruit/leaf pigments)",  
+      "Compounds like caryophyllene oxide, hexadecanoic acid esters, geranylgeraniol"
+    ],
+    "Precautions": "Limited clinical safety data — use with caution during pregnancy, in children or in large doses; may exert laxative effects in excess."  
+  },
+  
+  "jasminum": {
+    "Scientific Name": "Jasminum sambac",
+    "Sources": [
+      "Ethnobotanical reviews on jasmine (Jasminum sambac)",  
+      "Phytochemistry studies on jasmine flowers / leaves"
+    ],
+    "Medicinal Uses": [
+      "Aromatherapeutic uses (stress relief, calming)",  
+      "Used in traditional medicine for skin diseases, wounds",  
+      "Used as anti‑inflammatory agent in folk remedies",  
+      "Used in postpartum care, fever, digestive upset (in regional systems)"
+    ],
+    "Active Compounds": [
+      "Jasminoids, jasmine lactones",  
+      "Flavonoids",  
+      "Triterpenes",  
+      "Essential oils (linalool, benzyl acetate, eugenol, etc.)"
+    ],
+    "Precautions": "May cause skin sensitivity / irritation in some individuals; avoid internal medicinal use in high doses without evidence; pregnancy & lactation safety unclear."  
+  },
+  
+  "nerium_oleander": {
+    "Scientific Name": "Nerium oleander",
+    "Sources": [
+      "Toxicology literature (oleander poisoning)",  
+      "Botanical / medicinal plant reviews (noting high toxicity)"
+    ],
+    "Medicinal Uses": [
+      "— (very limited and risky; in traditional contexts, extracts have been used under highly controlled settings for heart conditions, but this is **not safe** for general use)"  
+    ],
+    "Active Compounds": [
+      "Cardiac glycosides: oleandrin, neriin, oleandrigenin",  
+      "Cardenolides, digitoxigenin derivatives"
+    ],
+    "Precautions": "All parts of the plant are highly toxic. Ingestion can cause fatal cardiac arrhythmias, vomiting, diarrhea, death. Do not use internally without strict professional supervision; avoid any casual medicinal use."  
+  },
+  
+  "plectranthus_amboinicus": {
+    "Scientific Name": "Plectranthus amboinicus",
+    "Sources": [
+      "MDPI review articles on P. amboinicus pharmacology",  
+      "CABI compendium entries",  
+      "Ethnopharmacology / medicinal plant reviews"
+    ],
+    "Medicinal Uses": [
+      "Used in respiratory ailments: cough, bronchitis, asthma",  
+      "Skin applications: wounds, insect bites, burns",  
+      "Digestive: colic, flatulence, diarrhea",  
+      "Analgesic, anti‑inflammatory, antimicrobial"
+    ],
+    "Active Compounds": [
+      "Thymol, carvacrol",  
+      "Limonene, linalool",  
+      "Other monoterpenoids, sesquiterpenes, phenolic compounds"
+    ],
+    "Precautions": "Some cytotoxicity observed in vitro; avoid large unverified doses; little data on safety in pregnancy / children."  
+  },
+  
+  "syzygium_jambos": {
+    "Scientific Name": "Syzygium jambos",
+    "Sources": [
+      "Ethnopharmacological reviews on Syzygium jambos",  
+      "Phytochemistry studies in regional journals"
+    ],
+    "Medicinal Uses": [
+      "Used in folk medicine for gastrointestinal disorders",  
+      "Antidiarrheal, antiemetic in traditional systems",  
+      "Antioxidant, antimicrobial uses in leaf / bark extracts"
+    ],
+    "Active Compounds": [
+      "Flavonoids, phenolics",  
+      "Tannins, glycosides",  
+      "Essential oils (in some parts)",  
+      "Ellagic acid, gallic acid derivatives"
+    ],
+    "Precautions": "Data on high‑dose toxicity limited; avoid during pregnancy / lactation unless supported by evidence; always cross‑verify local traditional safety norms."  
+  },
+  
+  "trigonella_foenum_graecum": {
+    "Scientific Name": "Trigonella foenum-graecum",
+    "Sources": [
+      "Many clinical and preclinical studies on fenugreek in pharmacology literature",  
+      "Review articles on fenugreek (Trigonella foenum-graecum)"
+    ],
+    "Medicinal Uses": [
+      "Antidiabetic, improves glucose tolerance",  
+      "Lipid lowering / cholesterol modulation",  
+      "Anti-inflammatory, antioxidant",  
+      "Galactagogue (stimulating milk production)",  
+      "Digestive aid, appetite stimulant in some contexts"
+    ],
+    "Active Compounds": [
+      "4‑hydroxyisoleucine",  
+      "Galactomannan, saponins (e.g. diosgenin)",  
+      "Flavonoids, alkaloids, phenolic compounds"
+    ],
+    "Precautions": "May cause hypoglycemia, GI discomfort (diarrhea, bloating), allergic reactions. Use cautiously in pregnancy (possible uterine stimulation), and in people on antidiabetic drugs (risk of additive effect)."  
+  }
+}
