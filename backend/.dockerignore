@@ -1,0 +1,77 @@
+# Docker ignore patterns
+# Similar to .gitignore but for Docker builds
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+venv/
+env/
+.venv/
+.uv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Documentation (not needed in container)
+*.md
+!requirements.txt
+
+# Test files
+test_*.py
+*_test.py
+tests/
+
+# Local development
+.env.local
+.env.development
+
+# Notebooks and examples
+model_kaggle_code.ipynb
+example_usage.py
+test_api.py
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+temp/
+tmp/
+*.tmp
+
+# Large files that might be cached locally
+uv.lock
+*.h5
+*.pb
+
+# Scripts
+start_server.ps1
+*.sh
+*.bat
+
+# Database (if any)
+knowledge.db
+main.py

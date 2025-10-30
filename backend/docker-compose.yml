@@ -1,0 +1,29 @@
+# Docker Compose configuration for local testing
+version: '3.8'
+
+services:
+  trimodal-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - TF_ENABLE_ONEDNN_OPTS=0
+      - ENV=production
+    volumes:
+      # Mount for development (comment out for production testing)
+      # - ./app.py:/app/app.py
+      # - ./preprocessing.py:/app/preprocessing.py
+      # - ./model_utils.py:/app/model_utils.py
+      # - ./xai.py:/app/xai.py
+      # - ./knowledge_utils.py:/app/knowledge_utils.py
+      # - ./custom_layers.py:/app/custom_layers.py
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
