@@ -6,11 +6,14 @@ services:
   - type: web
     name: trimodal-xai-backend
     env: docker
-    region: oregon
-    plan: free  # Change to 'starter' or higher for production
-    branch: main
     dockerfilePath: ./backend/Dockerfile
     dockerContext: ./backend
+    plan: starter  # Change to 'starter' ($7/mo) or 'free' for testing
+    region: oregon  # Choose: oregon, frankfurt, singapore, ohio
+    branch: main
+    
+    # Health check configuration
+    healthCheckPath: /health
     
     # Environment variables
     envVars:
@@ -21,16 +24,5 @@ services:
       - key: PYTHONUNBUFFERED
         value: "1"
     
-    # Health check endpoint
-    healthCheckPath: /health
-    
-    # Auto-deploy settings
+    # Auto-deploy on push to main branch
     autoDeploy: true
-    
-    # Resource limits (adjust based on your plan)
-    # Free tier: 512 MB RAM, 0.1 CPU
-    # Starter: 2 GB RAM, 1 CPU
-    disk:
-      name: trimodal-data
-      sizeGB: 1
-      mountPath: /tmp
