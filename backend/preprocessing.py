@@ -44,6 +44,31 @@ def remove_background(image_bytes: bytes) -> np.ndarray:
     return rgb_img
 
 
+def resize_image(image: np.ndarray, target_size: tuple = (224, 224)) -> np.ndarray:
+    """
+    Resize image to target size using high-quality interpolation.
+    
+    Args:
+        image: Input image array (H, W, 3) or (H, W)
+        target_size: Target size as (height, width)
+    
+    Returns:
+        Resized image array
+    """
+    # Use INTER_AREA for shrinking (best quality), INTER_CUBIC for enlarging
+    h, w = image.shape[:2]
+    target_h, target_w = target_size
+    
+    if h > target_h or w > target_w:
+        interpolation = cv2.INTER_AREA
+    else:
+        interpolation = cv2.INTER_CUBIC
+    
+    resized = cv2.resize(image, (target_w, target_h), interpolation=interpolation)
+    
+    return resized
+
+
 def vein_enhancement(rgb_image: np.ndarray) -> np.ndarray:
     """
     Apply vein enhancement using CLAHE + Frangi filter + morphological top-hat.
@@ -139,15 +164,17 @@ def texture_enhancement(rgb_image: np.ndarray) -> np.ndarray:
     return merged_rgb
 
 
-def preprocess_all_modalities(image_bytes: bytes) -> tuple:
+def preprocess_all_modalities(image_bytes: bytes, target_size: tuple = (224, 224)) -> tuple:
     """
-    Complete preprocessing pipeline: background removal -> vein & texture enhancement.
+    Complete preprocessing pipeline: background removal -> vein & texture enhancement -> resize.
     
     Args:
         image_bytes: Raw image bytes from uploaded file
+        target_size: Target size for model input (default: 224x224)
     
     Returns:
-        Tuple of (rgb_clean, vein_enhanced, texture_enhanced) as numpy arrays
+        Tuple of (rgb_clean, vein_enhanced, texture_enhanced) as numpy arrays,
+        all resized to target_size
     """
     # Step 1: Remove background
     rgb_clean = remove_background(image_bytes)
@@ -159,4 +186,9 @@ def preprocess_all_modalities(image_bytes: bytes) -> tuple:
     # Step 3: Texture enhancement
     texture_3ch = texture_enhancement(rgb_clean)
     
-    return rgb_clean, vein_3ch, texture_3ch
+    # Step 4: Resize all modalities to target size (CRITICAL FOR MODEL!)
+    rgb_resized = resize_image(rgb_clean, target_size)
+    vein_resized = resize_image(vein_3ch, target_size)
+    texture_resized = resize_image(texture_3ch, target_size)
+    
+    return rgb_resized, vein_resized, texture_resized
