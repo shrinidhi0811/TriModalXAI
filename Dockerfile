@@ -60,5 +60,6 @@ EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=30s --start-period=120s --retries=5 \
     CMD curl -f http://localhost:${PORT:-8000}/health || exit 1
 
-# Run the application using the startup script
-CMD ["./start.sh"]
+# Run the application - use bash to expand variables
+ENTRYPOINT ["/bin/bash", "-c"]
+CMD ["uvicorn app:app --host 0.0.0.0 --port ${PORT:-8000} --workers 1"]
