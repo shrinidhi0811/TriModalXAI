@@ -41,10 +41,14 @@ COPY backend/xai.py .
 COPY backend/knowledge_utils.py .
 COPY backend/custom_layers.py .
 COPY backend/config.py .
+COPY backend/start.sh .
 
 # Copy model and data files
 COPY backend/best_model.keras .
 COPY backend/knowledge_db.json .
+
+# Make start script executable
+RUN chmod +x start.sh
 
 # Create directory for temporary files
 RUN mkdir -p /tmp/gradcam
@@ -53,8 +57,8 @@ RUN mkdir -p /tmp/gradcam
 EXPOSE 8000
 
 # Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=120s --retries=5 \
+HEALTHCHECK --interval=30s --timeout=30s --start-period=120s --retries=5 \
     CMD curl -f http://localhost:${PORT:-8000}/health || exit 1
 
-# Run the application using sh to properly expand PORT variable
-CMD sh -c "uvicorn app:app --host 0.0.0.0 --port ${PORT:-8000} --workers 1"
+# Run the application using the startup script
+CMD ["./start.sh"]
