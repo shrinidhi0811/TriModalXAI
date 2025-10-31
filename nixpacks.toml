@@ -1,0 +1,11 @@
+# Railway Nixpacks configuration
+# This file tells Railway to use Docker instead of Nixpacks
+
+[phases.build]
+dependsOn = []
+
+[phases.setup]
+nixPkgs = []
+
+[start]
+cmd = "uvicorn app:app --host 0.0.0.0 --port $PORT --workers 1"

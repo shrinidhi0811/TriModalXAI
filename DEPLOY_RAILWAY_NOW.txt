@@ -1,0 +1,130 @@
+╔════════════════════════════════════════════════════════════════╗
+║                                                                ║
+║        🚂 RAILWAY DEPLOYMENT - QUICK START GUIDE 🚂           ║
+║                                                                ║
+║              Deploy Your TriModal XAI Backend                  ║
+║                    in 5 Minutes! ⚡                            ║
+║                                                                ║
+╚════════════════════════════════════════════════════════════════╝
+
+┌────────────────────────────────────────────────────────────────┐
+│  STEP 1: PUSH TO GITHUB (if not already done)                  │
+└────────────────────────────────────────────────────────────────┘
+
+    cd C:\Users\SHRINIDHI\Desktop\TriModalXAI
+    git add .
+    git commit -m "Add Railway deployment config"
+    git push origin main
+
+    ⚠️  If model file >100MB, use Git LFS:
+        git lfs install
+        git lfs track "*.keras"
+        git add .gitattributes
+        git commit -m "Add Git LFS"
+        git push
+
+
+┌────────────────────────────────────────────────────────────────┐
+│  STEP 2: SIGN UP FOR RAILWAY                                   │
+└────────────────────────────────────────────────────────────────┘
+
+    1. Visit: https://railway.app
+    2. Click "Start a New Project" or "Login"
+    3. Sign up with GitHub (1-click!)
+    4. Authorize Railway to access repos
+
+
+┌────────────────────────────────────────────────────────────────┐
+│  STEP 3: CREATE NEW PROJECT                                    │
+└────────────────────────────────────────────────────────────────┘
+
+    1. Click "New Project" on dashboard
+    2. Select "Deploy from GitHub repo"
+    3. Choose: shrinidhi0811/TriModalXAI
+    4. Railway auto-detects Dockerfile! ✅
+
+
+┌────────────────────────────────────────────────────────────────┐
+│  STEP 4: ADD ENVIRONMENT VARIABLES                             │
+└────────────────────────────────────────────────────────────────┘
+
+    Go to "Variables" tab and add:
+
+    TF_ENABLE_ONEDNN_OPTS = 0
+    ENV = production
+    PYTHONUNBUFFERED = 1
+
+
+┌────────────────────────────────────────────────────────────────┐
+│  STEP 5: DEPLOY!                                               │
+└────────────────────────────────────────────────────────────────┘
+
+    1. Click "Deploy"
+    2. Wait 5-10 minutes (first build)
+    3. Get your URL: https://your-app.up.railway.app
+
+
+┌────────────────────────────────────────────────────────────────┐
+│  STEP 6: TEST YOUR API                                         │
+└────────────────────────────────────────────────────────────────┘
+
+    📖 API Docs: https://your-app.up.railway.app/docs
+    ❤️  Health:   https://your-app.up.railway.app/health
+    🔍 Predict:   https://your-app.up.railway.app/predict
+
+
+╔════════════════════════════════════════════════════════════════╗
+║                     WHY RAILWAY?                               ║
+╚════════════════════════════════════════════════════════════════╝
+
+    ✅ $5/month FREE credits (generous!)
+    ✅ 1 GB RAM (perfect for TensorFlow)
+    ✅ Native Docker support
+    ✅ Auto-deploy from GitHub
+    ✅ Better for Python/ML than Vercel
+    ✅ No cold starts (unlike Render free tier)
+
+
+╔════════════════════════════════════════════════════════════════╗
+║                   FREE TIER LIMITS                             ║
+╚════════════════════════════════════════════════════════════════╝
+
+    💰 $5 credits/month
+    🕐 500 hours runtime (~20 days)
+    💾 1 GB RAM per service
+    📦 1 GB disk space
+    🌐 100 GB bandwidth
+
+
+╔════════════════════════════════════════════════════════════════╗
+║                  TROUBLESHOOTING                               ║
+╚════════════════════════════════════════════════════════════════╝
+
+    🔴 Build fails?
+       → Check Dockerfile path: backend/Dockerfile
+       → Verify all files in backend/ directory
+
+    🔴 Model not loading?
+       → Ensure best_model.keras is in backend/
+       → Use Git LFS if file >100 MB
+
+    🔴 Out of memory?
+       → Check logs for MemoryError
+       → Upgrade to Developer plan ($5/mo, 8GB RAM)
+
+
+╔════════════════════════════════════════════════════════════════╗
+║              FULL GUIDE: RAILWAY_DEPLOYMENT.md                 ║
+╚════════════════════════════════════════════════════════════════╝
+
+    📄 See RAILWAY_DEPLOYMENT.md for detailed instructions
+
+
+╔════════════════════════════════════════════════════════════════╗
+║                    READY TO DEPLOY!                            ║
+╚════════════════════════════════════════════════════════════════╝
+
+    🚀 Go to: https://railway.app
+    🎯 Deploy in < 5 minutes
+    ✨ Free tier is generous for ML apps!
+
