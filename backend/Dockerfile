@@ -24,8 +24,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy dependency files first (for better caching)
-COPY pyproject.toml ./
-COPY requirements.txt ./
+COPY backend/pyproject.toml ./
+COPY backend/requirements.txt ./
 
 # Install Python dependencies using pip
 # Upgrade pip first for better dependency resolution
@@ -33,17 +33,17 @@ RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
-COPY app.py .
-COPY preprocessing.py .
-COPY model_utils.py .
-COPY xai.py .
-COPY knowledge_utils.py .
-COPY custom_layers.py .
-COPY config.py .
+COPY backend/app.py .
+COPY backend/preprocessing.py .
+COPY backend/model_utils.py .
+COPY backend/xai.py .
+COPY backend/knowledge_utils.py .
+COPY backend/custom_layers.py .
+COPY backend/config.py .
 
 # Copy model and data files
-COPY best_model.keras .
-COPY knowledge_db.json .
+COPY backend/best_model.keras .
+COPY backend/knowledge_db.json .
 
 # Create directory for temporary files
 RUN mkdir -p /tmp/gradcam
