@@ -39,19 +39,37 @@ BASE_DIR = Path(__file__).parent
 MODEL_PATH = BASE_DIR / "best_model.keras"
 KNOWLEDGE_DB_PATH = BASE_DIR / "knowledge_db.json"
 
-# Load model and knowledge DB at startup
+# Load model and knowledge DB lazily (on first request)
 classifier = None
 knowledge_db = None
 
 
+def get_classifier():
+    """Lazy load the classifier on first use."""
+    global classifier
+    if classifier is None:
+        print("🔄 Loading model on first request...")
+        classifier = TriModalClassifier(str(MODEL_PATH))
+        print("✅ Model loaded successfully!")
+    return classifier
+
+
+def get_knowledge_db():
+    """Lazy load the knowledge database on first use."""
+    global knowledge_db
+    if knowledge_db is None:
+        print("🔄 Loading knowledge database...")
+        knowledge_db = KnowledgeDB(str(KNOWLEDGE_DB_PATH))
+        print("✅ Knowledge database loaded!")
+    return knowledge_db
+
+
 @app.on_event("startup")
 async def startup_event():
-    """Initialize model and knowledge database on startup."""
-    global classifier, knowledge_db
-    
+    """Check files exist but don't load heavy models yet."""
     try:
         print("=" * 50)
-        print("🚀 Starting TriModal XAI Backend...")
+        print("🚀 Starting TriModal XAI Backend (Lazy Loading Mode)...")
         print("=" * 50)
         
         print(f"📂 Base directory: {BASE_DIR}")
@@ -67,16 +85,8 @@ async def startup_event():
         print(f"✅ Model file exists ({MODEL_PATH.stat().st_size / (1024*1024):.2f} MB)")
         print(f"✅ Knowledge DB exists ({KNOWLEDGE_DB_PATH.stat().st_size / 1024:.2f} KB)")
         
-        print("\n🔄 Loading model (this may take 30-60 seconds)...")
-        classifier = TriModalClassifier(str(MODEL_PATH))
-        print("✅ Model loaded successfully!")
-        
-        print("\n🔄 Loading knowledge database...")
-        knowledge_db = KnowledgeDB(str(KNOWLEDGE_DB_PATH))
-        print("✅ Knowledge database loaded!")
-        
         print("\n" + "=" * 50)
-        print("🎉 Backend ready to accept requests!")
+        print("🎉 Backend ready! Models will load on first request.")
         print("=" * 50)
         
     except Exception as e:
@@ -132,6 +142,16 @@ async def predict(file: UploadFile = File(...)) -> Dict:
     Returns:
         JSON response with predictions, knowledge, and Grad-CAM visualization
     """
+    # Lazy load models on first request
+    try:
+        model = get_classifier()
+        kb = get_knowledge_db()
+    except Exception as e:
+        raise HTTPException(
+            status_code=503,
+            detail=f"Failed to load model: {str(e)}"
+        )
+    
     # Validate file type
     if not file.content_type.startswith("image/"):
         raise HTTPException(
@@ -151,12 +171,12 @@ async def predict(file: UploadFile = File(...)) -> Dict:
         
         # Step 2: Run inference
         print("Running model inference...")
-        predictions, preprocessed_inputs = classifier.predict(
+        predictions, preprocessed_inputs = model.predict(
             rgb_clean, vein_enhanced, texture_enhanced
         )
         
         # Step 3: Get top-3 predictions
-        top3_predictions = classifier.get_top_predictions(predictions, top_k=3)
+        top3_predictions = model.get_top_predictions(predictions, top_k=3)
         
         # Step 4: Get predicted class and confidence
         predicted_class = top3_predictions[0]["class"]
@@ -166,14 +186,14 @@ async def predict(file: UploadFile = File(...)) -> Dict:
         
         # Step 5: Retrieve knowledge for predicted class
         print("Retrieving medicinal knowledge...")
-        knowledge_info = knowledge_db.get_formatted_info(predicted_class)
+        knowledge_info = kb.get_formatted_info(predicted_class)
         
         # Step 6: Generate Grad-CAM++ visualization
         print("Generating Grad-CAM++ heatmap...")
         predicted_index = np.argmax(predictions[0])
         
         gradcam_overlay = generate_gradcam_overlay(
-            model=classifier.model,
+            model=model.model,
             rgb_image=rgb_clean,
             img_inputs=preprocessed_inputs,
             layer_name="fused_reduce",  # From your model architecture
