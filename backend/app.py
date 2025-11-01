@@ -49,13 +49,44 @@ async def startup_event():
     """Initialize model and knowledge database on startup."""
     global classifier, knowledge_db
     
-    print("Loading model...")
-    classifier = TriModalClassifier(str(MODEL_PATH))
-    print("Model loaded successfully!")
-    
-    print("Loading knowledge database...")
-    knowledge_db = KnowledgeDB(str(KNOWLEDGE_DB_PATH))
-    print("Knowledge database loaded!")
+    try:
+        print("=" * 50)
+        print("🚀 Starting TriModal XAI Backend...")
+        print("=" * 50)
+        
+        print(f"📂 Base directory: {BASE_DIR}")
+        print(f"🤖 Model path: {MODEL_PATH}")
+        print(f"📚 Knowledge DB path: {KNOWLEDGE_DB_PATH}")
+        
+        # Check if files exist
+        if not MODEL_PATH.exists():
+            raise FileNotFoundError(f"Model file not found: {MODEL_PATH}")
+        if not KNOWLEDGE_DB_PATH.exists():
+            raise FileNotFoundError(f"Knowledge DB not found: {KNOWLEDGE_DB_PATH}")
+        
+        print(f"✅ Model file exists ({MODEL_PATH.stat().st_size / (1024*1024):.2f} MB)")
+        print(f"✅ Knowledge DB exists ({KNOWLEDGE_DB_PATH.stat().st_size / 1024:.2f} KB)")
+        
+        print("\n🔄 Loading model (this may take 30-60 seconds)...")
+        classifier = TriModalClassifier(str(MODEL_PATH))
+        print("✅ Model loaded successfully!")
+        
+        print("\n🔄 Loading knowledge database...")
+        knowledge_db = KnowledgeDB(str(KNOWLEDGE_DB_PATH))
+        print("✅ Knowledge database loaded!")
+        
+        print("\n" + "=" * 50)
+        print("🎉 Backend ready to accept requests!")
+        print("=" * 50)
+        
+    except Exception as e:
+        print("\n" + "=" * 50)
+        print(f"❌ STARTUP FAILED: {type(e).__name__}")
+        print(f"Error: {str(e)}")
+        print("=" * 50)
+        import traceback
+        traceback.print_exc()
+        raise
 
 
 @app.get("/")
@@ -73,11 +104,20 @@ async def root():
 
 @app.get("/health")
 async def health_check():
-    """Health check endpoint."""
+    """Health check endpoint with detailed status."""
+    model_status = "loaded" if classifier is not None else "not_loaded"
+    kb_status = "loaded" if knowledge_db is not None else "not_loaded"
+    
+    is_healthy = classifier is not None and knowledge_db is not None
+    
     return {
-        "status": "healthy",
+        "status": "healthy" if is_healthy else "unhealthy",
         "model_loaded": classifier is not None,
-        "knowledge_db_loaded": knowledge_db is not None
+        "knowledge_db_loaded": knowledge_db is not None,
+        "details": {
+            "model": model_status,
+            "knowledge_db": kb_status
+        }
     }
 
 
