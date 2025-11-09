@@ -5,10 +5,14 @@ FROM python:3.11-slim
 # Set working directory
 WORKDIR /app
 
-# Set environment variables
+# Set environment variables for memory optimization
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     TF_ENABLE_ONEDNN_OPTS=0 \
+    TF_CPP_MIN_LOG_LEVEL=3 \
+    TF_FORCE_GPU_ALLOW_GROWTH=true \
+    MALLOC_TRIM_THRESHOLD_=100000 \
+    MALLOC_MMAP_THRESHOLD_=100000 \
     PIP_NO_CACHE_DIR=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1
 

@@ -4,8 +4,22 @@ FastAPI backend for tri-modal medicinal leaf classification with XAI.
 
 import base64
 import io
+import os
 from pathlib import Path
 from typing import Dict
+
+# TensorFlow memory optimization - MUST be before any TF imports
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # Suppress TF warnings
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'  # Disable oneDNN
+os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'  # Memory growth
+
+import tensorflow as tf
+# Configure TensorFlow for minimal memory usage
+tf.config.set_soft_device_placement(True)
+gpus = tf.config.list_physical_devices('GPU')
+if gpus:
+    for gpu in gpus:
+        tf.config.experimental.set_memory_growth(gpu, True)
 
 import cv2
 import numpy as np

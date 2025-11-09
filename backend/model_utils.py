@@ -1,12 +1,23 @@
 """
-Model utilities for loading and running inference.
+Model utilities for loading and running inference with memory optimization.
 """
 
+import os
 import cv2
 import numpy as np
+
+# TensorFlow memory optimization
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
+
 import tensorflow as tf
 from tensorflow.keras.applications.mobilenet_v3 import preprocess_input
 from typing import List, Tuple
+
+# Configure TensorFlow for low memory
+tf.config.optimizer.set_jit(False)  # Disable XLA
+tf.config.threading.set_intra_op_parallelism_threads(2)
+tf.config.threading.set_inter_op_parallelism_threads(2)
 
 # Import custom layers to register them before model loading
 from custom_layers import ECA, SpatialAttention, MobileViTBlock
@@ -14,16 +25,18 @@ from custom_layers import ECA, SpatialAttention, MobileViTBlock
 
 class TriModalClassifier:
     """
-    Wrapper class for tri-modal leaf classification model.
+    Wrapper class for tri-modal leaf classification model with memory optimization.
     """
     
     def __init__(self, model_path: str):
         """
-        Initialize the classifier.
+        Initialize the classifier with memory-efficient settings.
         
         Args:
             model_path: Path to the saved Keras model (.keras file)
         """
+        print(f"Loading model from {model_path} with memory optimization...")
+        
         # Define custom objects for model loading
         custom_objects = {
             'ECA': ECA,
@@ -31,11 +44,15 @@ class TriModalClassifier:
             'MobileViTBlock': MobileViTBlock
         }
         
-        # Load model with custom objects
+        # Load model with custom objects and memory optimization
         self.model = tf.keras.models.load_model(
             model_path, 
-            custom_objects=custom_objects
+            custom_objects=custom_objects,
+            compile=False  # Don't compile - saves memory
         )
+        
+        print(f"Model loaded successfully (memory-optimized mode)")
+        
         self.classes = [
             "alpinia_galanga",
             "azadirachta_indica",
